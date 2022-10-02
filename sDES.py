@@ -36,9 +36,11 @@ def Sbox( lhalve, rhalve ):
 def inversePermutation( intxt ): #(3,0,2,4,6,1,7,5)
   return intxt[3]+intxt[0]+intxt[2]+intxt[4]+intxt[6]+intxt[1]+intxt[7]+intxt[5]
 
-def sDES( text, key ):
-  subkey1, subkey2 = subKeys( key ) # 8-bit
+def sDES( text, key, Encrypt ):
+  subkey2, subkey1 = subKeys( key ) # 8-bit Decrypt
   # Encrypt
+  if Encrypt:
+    subkey1, subkey2 = subKeys( key )     # 8-bit
   permutOne = initPermutation( text )     # Step 1
   blockMix = feistel( subkey1, permutOne )# Step 2
   blockMix = blockMix[4:]+blockMix[:4]    # Step 3
@@ -50,31 +52,39 @@ def main():
   #PlainText and Key 10-bit
   plainText = "01010101"
   Key10 = "0000011111"
-  ciphertext = sDES( plainText, Key10 )
+  ciphertext = sDES( plainText, Key10, True )
   print("TEST_VECTOR(1)")
   print(f"PlainText: {plainText} and Key: {Key10} => CipherText: {ciphertext}")
   #11000100
+  txt = sDES( ciphertext, Key10, False)
+  print(f"Decrypt last ciphertext: {txt}")
   
   plainText = "00110110"
   Key10 = "0010010111"
-  ciphertext = sDES( plainText, Key10 )
+  ciphertext = sDES( plainText, Key10, True )
   print("TEST_VECTOR(2)")
   print(f"PlainText: {plainText} and Key: {Key10} => CipherText: {ciphertext}")
   #01011010
+  txt = sDES( ciphertext, Key10, False )
+  print(f"Decrypt last ciphertext: {txt}")
   
   plainText = "00000000"
   Key10 = "0000000000"
-  ciphertext = sDES( plainText, Key10 )
+  ciphertext = sDES( plainText, Key10, True )
   print("TEST_VECTOR(3)")
   print(f"PlainText: {plainText} and Key: {Key10} => CipherText: {ciphertext}")
   #11110000
+  txt = sDES( ciphertext, Key10, False )
+  print(f"Decrypt last ciphertext: {txt}")
   
   plainText = "11111111"
   Key10 = "1111111111"
-  ciphertext = sDES( plainText, Key10 )
+  ciphertext = sDES( plainText, Key10, True )
   print("TEST_VECTOR(4)")
   print(f"PlainText: {plainText} and Key: {Key10} => CipherText: {ciphertext}")
   #00001111
+  txt = sDES( ciphertext, Key10, False )
+  print(f"Decrypt last ciphertext: {txt}")
 
 if __name__ == "__main__":
 	main()

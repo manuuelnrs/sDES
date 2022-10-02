@@ -4,10 +4,6 @@
 >	@brief sDES Algorithm - Cryptography - Practice 3
 >	@version 1.0 
 '''
-
-from math import perm
-
-
 def initPermutation( txt ): #(1,5,2,0,3,7,4,6)
   return txt[1]+txt[5]+txt[2]+txt[0]+txt[3]+txt[7]+txt[4]+txt[6]
 
